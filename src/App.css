@@ -2,15 +2,9 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,11 +17,91 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.spacer {
+  min-height: 5vh;
+}
+
+.counter {
+  padding: 10vh;
+  max-width: 50vh;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: 248px;
+}
+
+.cell {
+  text-align: center;
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    display: inline-block
+}
+
+#cell1 {
+  border-bottom: 2px solid black;
+  border-top: 0px solid black;
+  border-right: 2px solid black;
+  border-left: 0px solid black;   
+}
+
+#cell2 {
+  border-bottom: 2px solid black;
+  border-top: 0px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;   
+}
+
+#cell3 {
+  border-bottom: 2px solid black;
+  border-top: 0px solid black;
+  border-right: 0px solid black;
+  border-left: 2px solid black;
+}
+
+#cell4 {
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 0px solid black;   
+}
+
+#cell5 {
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;   
+}
+
+#cell6 {
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+  border-right: 0px solid black;
+  border-left: 2px solid black;   
+}
+
+#cell7 {
+  border-bottom: 0px solid black;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 0px solid black;   
+}
+
+#cell8 {
+  border-bottom: 0px solid black;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;   
+}
+
+#cell9 {
+  border-bottom: 0px solid black;
+  border-top: 2px solid black;
+  border-right: 0px solid black;
+  border-left: 2px solid black;   
 }
