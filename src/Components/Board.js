@@ -3,42 +3,79 @@ import MessageBoard from './MessageBoard'
 
 function Board(props) {
 
-    const moves = props.gameBoard
-
-    const [player, setPlayer] = useState(props.initialPlayer)
+    const [gameBoard, setGameBoard] = useState(Array(9).fill(''))
+    const [startingPlayer] = useState(props.random)
+    const [currentPlayer, setCurrentPlayer] = useState(startingPlayer)
 
     //broken function
+    
     const userDidMove = (index) => {
-        function update() {
-            setPlayer(currentPlayer => currentPlayer === 'X' ? 'O' : 'X')
-            console.log(`useDidMove->update() read player as ${player}`)
-        }
-        update()
-        document.getElementById(`cell${index + 1}`).innerHTML = {player}
-        console.log(`userDidMove read startingPlayer as ${props.startingPlayer}`)
-        console.log(`userDidMove read currentPlayer as ${props.currentPlayer}`)
-        console.log(`userDidMove read player as ${player}`)
+        console.log( `userDidMove() ran and read currentPlayer as ${currentPlayer}`)
+        const addMove = gameBoard.splice(index, 1, currentPlayer)
+        setGameBoard(addMove)
+
+        gameBoard.map((item, index) =>
+        <div className='cell'
+            id={`cell${(index + 1)}`}
+            key={index}
+            onClick={() => userDidMove(index)}>
+            {item}
+        </div>)
+
+        update(currentPlayer)
+
+        console.log(`post-splice gameBoard is ${gameBoard}`)
+        
+    }
+    
+    const update = (currentPlayer) => {
+        console.log( `update() ran`)
+       setCurrentPlayer(currentPlayer => currentPlayer === 'X' ? 'O' : 'X')
+        console.log(`update() read currentPlayer as ${currentPlayer}`)
     }
 
-    const cell = moves.map((item, index) =>
-        <div className='cell' 
-            id={`cell${(index + 1)}`} 
-            key={index} 
+
+    console.log(`pre-cell gameBoard is ${gameBoard}`)
+    const cell = gameBoard.map((item, index) =>
+        <div className='cell'
+            id={`cell${(index + 1)}`}
+            key={index}
             onClick={() => userDidMove(index)}>
             {item}
         </div>
     )
-    
+
+/*
+const Cell = (props) => {
+  let items = [];
+  for (let i = 0; i < props.numTimes; i++) {
+    items.push(props.children(i));
+  }
+  return <div>{items}</div>;
+}
+
+    const test = () => {
+        return (
+            <Cell>
+                {gameBoard.map((item, index) => 
+                    <div className='cell'>
+                        'W'
+                    </div>}
+            </Cell>
+        );
+    }
+*/
+
+
     return (
-        <div className='game'>
-            <MessageBoard />
-            <div className='board'>
-                {cell} 
+        <div className='game' >
+            <MessageBoard currentPlayer={currentPlayer} />
+                <div className='board' id='gameBoard'>
+                    {cell}
+                </div>
             </div>
-        </div>
     )
-      /* onClick={() => { this.userDidMove(index) }} */
-   
+
 }
 
 export default Board
