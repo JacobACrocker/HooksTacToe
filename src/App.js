@@ -11,12 +11,10 @@ function App() {
     if (number % 2 === 0) {
       let player = 'X'
       //message(`Player ${startingPlayer} goes first`)
-      console.log(`randomizePlayer() ran on #${number}. Player ${player} goes first`)
       return(player)
     } else {
       let player = 'O'
       //message(`Player ${startingPlayer} goes first`)
-      console.log(`#${number} rolled. Player ${player} goes first`)
       return(player)
     } 
   }    
