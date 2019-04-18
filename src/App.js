@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Board from './Components/Board'
 import Counter from './Components/Count'
 import './App.css';
