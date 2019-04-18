@@ -4,21 +4,7 @@ import Counter from './Components/Count'
 import './App.css';
 
 function App() {
-
-  const [number] = useState(Math.floor(Math.random() * 10) + 1)
-
-  function randomizePlayer() {
-    if (number % 2 === 0) {
-      let player = 'X'
-      //message(`Player ${startingPlayer} goes first`)
-      return(player)
-    } else {
-      let player = 'O'
-      //message(`Player ${startingPlayer} goes first`)
-      return(player)
-    } 
-  }    
-          
+      
     return (
       <div className="App">
         <header className="App-header">
@@ -29,7 +15,7 @@ function App() {
             </p>
           </div>
         </header>
-        <Board random={randomizePlayer}/>
+        <Board />
         <Counter player='X' initialCount={0}/>
         <Counter player='O' initialCount={0}/>
       </div>
