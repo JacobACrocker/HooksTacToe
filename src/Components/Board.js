@@ -21,7 +21,6 @@ const Board = () => {
         } 
     }   
 
-
     const EndGame = () => {
         console.log(`EndGame game board is:`)
         console.log(gameBoard)
@@ -62,6 +61,9 @@ const Board = () => {
                console.log(`${currentPlayer} is the winner`)
                setEndGameBoard(gameBoard)
                return(<EndGame />)
+           } else if (tieCheck()) {
+               console.log(`Tie!`)
+               setEndGameBoard(gameBoard)
            } else {
             switchPlayer()
            }
@@ -84,9 +86,17 @@ const Board = () => {
             (gameBoard[0] === player && gameBoard[4] === player && gameBoard[8] === player) ||
             (gameBoard[2] === player && gameBoard[4] === player && gameBoard[6] === player)
             ){
-            return(true)
+            return true
         } else {
-            return(false)
+            return false
+        }
+    }
+
+    const tieCheck = () => {
+        if (gameBoard.includes(null)) {
+            return false
+        } else {
+            return true
         }
     }
 
@@ -100,7 +110,7 @@ const Board = () => {
 
     return (
         <div className='game' >
-            <MessageBoard currentPlayer={currentPlayer} />
+            <MessageBoard currentPlayer={currentPlayer} gameBoard={gameBoard} endGameBoard={endGameBoard} tieCheck={tieCheck}/>
                 <div className='board' id='gameBoard'>
                     <Board />
                 </div>
