@@ -3,7 +3,9 @@ import MessageBoard from './MessageBoard'
 
 const Board = () => {
 
-    const [number, setNumber] = useState(Math.floor(Math.random() * 10) + 1)    
+    const [number, setNumber] = useState(Math.floor(Math.random() * 10) + 1)
+    const [isTie, setIsTie] = useState(false)
+    const [isWinner, setIsWinner] = useState(false)
     const [gameBoard, setGameBoard] = useState(Array(9).fill(null))
     const [endGameBoard, setEndGameBoard] = useState(null)
     const [startingPlayer, setStartingPlayer] = useState(randomizePlayer())
@@ -47,7 +49,7 @@ const Board = () => {
     }  
     
     const Board = (index) => {
-        if (winCheck(currentPlayer, index)){
+        if ((winCheck(currentPlayer, index)) || (isTie)) {
             return(<EndGame />)
         } else {
             return (<LiveBoard />)
@@ -61,7 +63,7 @@ const Board = () => {
                console.log(`${currentPlayer} is the winner`)
                setEndGameBoard(gameBoard)
                return(<EndGame />)
-           } else if (tieCheck()) {
+           } else if (isTie === true) {
                console.log(`Tie!`)
                setEndGameBoard(gameBoard)
            } else {
@@ -86,22 +88,27 @@ const Board = () => {
             (gameBoard[0] === player && gameBoard[4] === player && gameBoard[8] === player) ||
             (gameBoard[2] === player && gameBoard[4] === player && gameBoard[6] === player)
             ){
+            setIsWinner(true)
             return true
         } else {
+            setIsWinner(false)
+            tieCheck()
             return false
         }
     }
 
     const tieCheck = () => {
         if (gameBoard.includes(null)) {
-            return false
+            setIsTie(false)
         } else {
-            return true
+            setIsTie(true)
+            setEndGameBoard(gameBoard)
         }
     }
 
     const resetGame = () => {
         setNumber(Math.floor(Math.random() * 10) + 1)
+        setIsTie(false)
         setGameBoard(Array(9).fill(null))
         setStartingPlayer(randomizePlayer())
         setCurrentPlayer(startingPlayer)
@@ -110,7 +117,7 @@ const Board = () => {
 
     return (
         <div className='game' >
-            <MessageBoard currentPlayer={currentPlayer} gameBoard={gameBoard} endGameBoard={endGameBoard} tieCheck={tieCheck}/>
+            <MessageBoard currentPlayer={currentPlayer} gameBoard={gameBoard} endGameBoard={endGameBoard} isTie={isTie} isWinner={isWinner}/>
                 <div className='board' id='gameBoard'>
                     <Board />
                 </div>
