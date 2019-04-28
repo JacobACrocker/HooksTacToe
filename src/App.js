@@ -1,6 +1,7 @@
-import React from 'react';
+import React from 'react'
 import Board from './Components/Board'
 import Counter from './Components/Count'
+//import Playground from './Components/Playground'
 import './App.css';
 
 function App() {

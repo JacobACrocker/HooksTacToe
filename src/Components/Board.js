@@ -3,7 +3,11 @@ import MessageBoard from './MessageBoard'
 
 const Board = () => {
 
-    const [number, setNumber] = useState(Math.floor(Math.random() * 10) + 1)
+    const [number, setNumber] = useState(Math.floor(Math.random() * 10) + 1)    
+    const [gameBoard, setGameBoard] = useState(Array(9).fill(null))
+    const [endGameBoard, setEndGameBoard] = useState(null)
+    const [startingPlayer, setStartingPlayer] = useState(randomizePlayer())
+    const [currentPlayer, setCurrentPlayer] = useState(startingPlayer)
 
     function randomizePlayer() {
         if (number % 2 === 0) {
@@ -17,11 +21,21 @@ const Board = () => {
         } 
     }   
 
-    const [gameBoard, setGameBoard] = useState(Array(9).fill(null))
-    const [startingPlayer, setStartingPlayer] = useState(randomizePlayer())
-    const [currentPlayer, setCurrentPlayer] = useState(startingPlayer)
 
-    const blankCells = 
+    const EndGame = () => {
+        console.log(`EndGame game board is:`)
+        console.log(gameBoard)
+        return(
+        endGameBoard.map((item, index) =>
+        <div className='cell'
+            id={`cell${(index + 1)}`}
+            key={index}>
+            {item}
+        </div>
+    ) )}
+    
+    const LiveBoard = () => {
+        return(
         gameBoard.map((item, index) =>
         <div className='cell'
             id={`cell${(index + 1)}`}
@@ -29,43 +43,38 @@ const Board = () => {
             onClick={() => userDidMove(index)}>
             {item}
         </div>
-    )   
- /*
-    const userDidMove = (index) => {
-        console.log(`userDidMove ran`)
-        if (gameBoard[index] === null){
-            gameBoard.splice(index, 1, currentPlayer)
-            updateBoard()
-            winCheck(currentPlayer, index)
-            switchPlayer()
+            ) 
+        )
+    }  
+    
+    const Board = (index) => {
+        if (winCheck(currentPlayer, index)){
+            return(<EndGame />)
         } else {
-            console.log(`cell full`)
+            return (<LiveBoard />)
         }
-            console.log(`--------- end process -----------`)
-    }*/
+    }
 
-    const userDidMove = (index) => {
-        console.log(`userDidMove ran`)
+     const userDidMove = (index) => {
         if (gameBoard[index] === null){
             gameBoard.splice(index, 1, currentPlayer)
-           if (winCheck(currentPlayer, index)){
+           if (winCheck(currentPlayer)){
                console.log(`${currentPlayer} is the winner`)
+               setEndGameBoard(gameBoard)
+               return(<EndGame />)
            } else {
             switchPlayer()
            }
         } else {
-            console.log(`cell full`)
+            return (<LiveBoard />)
         }
-            console.log(`--------- end process -----------`)
     }
     
     const switchPlayer = () => {
         setCurrentPlayer(currentPlayer => currentPlayer === 'X' ? 'O' : 'X')
-        console.log(`switchPlayer ran`)
     }
 
-    const winCheck = (player, index) => {
-        console.log(`winCheck ran`)
+    const winCheck = (player) => {
         if ((gameBoard[0] === player && gameBoard[1] === player && gameBoard[2] === player) ||
             (gameBoard[3] === player && gameBoard[4] === player && gameBoard[5] === player) ||
             (gameBoard[6] === player && gameBoard[7] === player && gameBoard[8] === player) ||
@@ -75,14 +84,8 @@ const Board = () => {
             (gameBoard[0] === player && gameBoard[4] === player && gameBoard[8] === player) ||
             (gameBoard[2] === player && gameBoard[4] === player && gameBoard[6] === player)
             ){
-            console.log(gameBoard)
-            console.log(player)
-            console.log(`winner`)
             return(true)
         } else {
-            console.log(gameBoard)
-            console.log(player)
-            console.log(`no winner`)
             return(false)
         }
     }
@@ -99,7 +102,7 @@ const Board = () => {
         <div className='game' >
             <MessageBoard currentPlayer={currentPlayer} />
                 <div className='board' id='gameBoard'>
-                    {blankCells}
+                    <Board />
                 </div>
                 <div className='spacer'></div>
                 <div>
